@@ -2,7 +2,7 @@
 
 ## Description
 
-This library will allow you to register listeners for (almost) arbitrary key presses and key combinations without need for ugly ifs with magic constants like 
+This library will allow you to register listeners for (almost) arbitrary key presses and key combinations without need for ugly ifs with magic constants like
 ```dart
 if (event.keyCode == 13) { //Enter
   //do stuff
@@ -45,13 +45,20 @@ query("body").onKeyUp.listen(keyboard.press);
 ```
 
 You can also pass `keyboard` to `onKeyDown` stream, but then you will destroy default browser actions for your keys and combinations.
-E.g. F5 will no longer refresh page, Ctrl+A will no longer select all and so on. It may be what you want, but not necessarily. 
+E.g. F5 will no longer refresh page, Ctrl+A will no longer select all and so on. It may be what you want, but not necessarily.
 
 You can register multiple actions to the same combination
 
 ```dart
 keyboard.register("shift+d", (_) => print("Listener one"));
 keyboard.register("shift+d", (_) => print("Listener two"));
+```
+
+You can register multiple actions to the Any Key to catch unregistered keys
+
+```dart
+keyboard.register("any", (event) => print("Any Key Listener one received $event.keyCode"));
+keyboard.register("any", (event) => print("Any Key Listener two received $event.keyCode"));
 ```
 
 You can unregister actions in a way analogous to registering them
@@ -62,3 +69,4 @@ keyboard.unregister([Key.Ctrl, Key.A]);
 keyboard.unregister("ctrl+a");
 ```
 Press keys and watch your actions execute!
+
